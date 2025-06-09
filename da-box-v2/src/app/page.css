@@ -1,0 +1,15 @@
+.btn-green {
+  background-color: #10b981; /* VS Code color picker here */
+}
+
+.btn-green:hover {
+  background-color: #000000;
+}
+
+.btn-red {
+  background-color: #ef4444;
+}
+
+.btn-red:hover {
+  background-color: #dc2626;
+}
