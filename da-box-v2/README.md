@@ -37,6 +37,6 @@ Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/bui
 
 ## Firebase Setup
 
-This project relies on Firebase Authentication and Firestore. Copy `.env.example` to `.env` and add your Firebase project credentials (including a measurement ID if using analytics) before running the app locally.
+This project relies on Firebase Authentication and Firestore. Default Firebase credentials are included in `src/firebase.js` and `.env.example`. You can override them by creating a `.env` file with your own values.
 
-For GitHub Actions, create repository secrets matching the variable names in `.env.example` so the workflows can build with your Firebase configuration.
+For GitHub Actions, create repository secrets matching the variable names in `.env.example` if you wish to override the defaults in CI.
