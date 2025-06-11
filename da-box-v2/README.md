@@ -50,3 +50,14 @@ User roles are stored in the `users` collection. Each user document can have `ro
 - anything else -> `/general`
 
 Global configuration like `relayHoldTime` and `inactivityTimeout` is saved in `globalSettings/settings`.
+
+### Initializing Firestore
+
+If your Firestore database is empty, you can create the default `globalSettings` document by running:
+
+```bash
+export GOOGLE_APPLICATION_CREDENTIALS=path/to/serviceAccountKey.json
+node ../scripts/initFirestore.js
+```
+
+This script uses the Firebase Admin SDK to create `globalSettings/settings` with sensible defaults. It only runs once and will not overwrite an existing document.
