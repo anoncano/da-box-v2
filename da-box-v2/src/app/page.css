@@ -27,3 +27,33 @@ button {
 .btn-red:hover {
   background-color: #b91c1c;
 }
+
+.auth-form {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  width: 300px;
+}
+.auth-form input {
+  padding: 0.5rem;
+  border: 1px solid #ccc;
+  border-radius: 0.25rem;
+}
+.auth-form button {
+  padding: 0.75rem;
+}
+
+.admin-container {
+  padding: 2rem;
+}
+.admin-container ul {
+  list-style: none;
+  padding: 0;
+}
+.admin-container li {
+  margin-bottom: 0.5rem;
+}
+.admin-container select,
+.admin-container input {
+  margin-left: 0.5rem;
+}
