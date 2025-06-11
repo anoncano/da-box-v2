@@ -40,3 +40,13 @@ Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/bui
 This project relies on Firebase Authentication and Firestore. Default Firebase credentials are included in `src/firebase.js` and `.env.example`. You can override them by creating a `.env` file with your own values.
 
 For GitHub Actions, create repository secrets matching the variable names in `.env.example` if you wish to override the defaults in CI.
+
+### Firestore Data
+
+User roles are stored in the `users` collection. Each user document can have `role` set to `admin`, `sub admin`, `chat admin`, or empty for a normal user. The app routes signed-in users based on this value:
+
+- `admin` -> `/admin`
+- `chat admin` -> `/chat`
+- anything else -> `/general`
+
+Global configuration like `relayHoldTime` and `inactivityTimeout` is saved in `globalSettings/settings`.

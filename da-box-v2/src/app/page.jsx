@@ -7,7 +7,7 @@ import {
   signInWithEmailAndPassword,
   onAuthStateChanged,
 } from "firebase/auth";
-import { doc, getDoc, updateDoc } from "firebase/firestore";
+import { doc, getDoc } from "firebase/firestore";
 import "./page.css";
 
 export default function Home() {
@@ -15,8 +15,6 @@ export default function Home() {
   const [user, setUser] = useState(null);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [locked, setLocked] = useState(true);
-  const [disabled, setDisabled] = useState(false);
 
   useEffect(() => {
     const unsub = onAuthStateChanged(auth, async (u) => {
@@ -24,13 +22,12 @@ export default function Home() {
       if (u) {
         const roleSnap = await getDoc(doc(db, "users", u.uid));
         const role = roleSnap.data()?.role || "";
-        if (role !== "admin" && role !== "chat admin") {
+        if (role === "admin") {
+          router.push("/admin");
+        } else if (role === "chat admin") {
+          router.push("/chat");
+        } else {
           router.push("/general");
-          return;
-        }
-        const stateSnap = await getDoc(doc(db, "global", "state"));
-        if (stateSnap.exists()) {
-          setLocked(stateSnap.data().locked !== false);
         }
       }
     });
@@ -42,21 +39,6 @@ export default function Home() {
     await signInWithEmailAndPassword(auth, email, password);
   }
 
-  async function toggleLock() {
-    if (disabled) return;
-    const stateRef = doc(db, "global", "state");
-    const configRef = doc(db, "config", "settings");
-    const cfgSnap = await getDoc(configRef);
-    const hold = cfgSnap.exists() ? cfgSnap.data().relayHoldTime || 5000 : 5000;
-    await updateDoc(stateRef, { locked: !locked });
-    setLocked(!locked);
-    setDisabled(true);
-    setTimeout(async () => {
-      await updateDoc(stateRef, { locked: true });
-      setLocked(true);
-      setDisabled(false);
-    }, hold);
-  }
 
   if (!user) {
     return (
@@ -81,13 +63,7 @@ export default function Home() {
 
   return (
     <main className="page-container">
-      <button
-        onClick={toggleLock}
-        className={locked ? "btn-red" : "btn-green"}
-        disabled={disabled}
-      >
-        {locked ? "Locked" : "Unlocked"}
-      </button>
+      <p>Redirecting...</p>
     </main>
   );
 }
