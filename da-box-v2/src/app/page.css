@@ -1,15 +1,29 @@
-.btn-green {
-  background-color: #10b981; /* VS Code color picker here */
+.page-container {
+  display: flex;
+  min-height: 100vh;
+  align-items: center;
+  justify-content: center;
 }
 
+button {
+  padding: 1rem 2rem;
+  border-radius: 0.5rem;
+  font-weight: bold;
+  color: #ffffff;
+  cursor: pointer;
+  transition: background-color 0.3s ease-in-out;
+}
+
+.btn-green {
+  background-color: #10b981;
+}
 .btn-green:hover {
-  background-color: #000000;
+  background-color: #0f766e;
 }
 
 .btn-red {
   background-color: #ef4444;
 }
-
 .btn-red:hover {
-  background-color: #dc2626;
+  background-color: #b91c1c;
 }
