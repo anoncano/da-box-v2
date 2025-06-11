@@ -56,8 +56,10 @@ Global configuration like `relayHoldTime` and `inactivityTimeout` is saved in `g
 If your Firestore database is empty, you can create the default `globalSettings` document by running:
 
 ```bash
-export GOOGLE_APPLICATION_CREDENTIALS=path/to/serviceAccountKey.json
-node ../scripts/initFirestore.js
+export FIREBASE_SERVICE_ACCOUNT="$(cat path/to/serviceAccountKey.json)"
+npm run init-firestore
 ```
 
-This script uses the Firebase Admin SDK to create `globalSettings/settings` with sensible defaults. It only runs once and will not overwrite an existing document.
+The script uses the Firebase Admin SDK and will fall back to `GOOGLE_APPLICATION_CREDENTIALS` if `FIREBASE_SERVICE_ACCOUNT` is not provided. It only runs once and will not overwrite an existing document.
+
+GitHub Actions automatically run this initialization step during deployments using the repository's service account secret, so your production database always contains the required document.

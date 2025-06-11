@@ -1,7 +1,12 @@
-const { initializeApp, applicationDefault } = require('firebase-admin/app');
+const { initializeApp, applicationDefault, cert } = require('firebase-admin/app');
 const { getFirestore } = require('firebase-admin/firestore');
 
-initializeApp({ credential: applicationDefault() });
+const serviceAccount = process.env.FIREBASE_SERVICE_ACCOUNT;
+if (serviceAccount) {
+  initializeApp({ credential: cert(JSON.parse(serviceAccount)) });
+} else {
+  initializeApp({ credential: applicationDefault() });
+}
 const db = getFirestore();
 
 async function main() {
