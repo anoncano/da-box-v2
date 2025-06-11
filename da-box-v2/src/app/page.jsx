@@ -13,22 +13,25 @@ import "./page.css";
 export default function Home() {
   const router = useRouter();
   const [user, setUser] = useState(null);
+  const [loading, setLoading] = useState(true);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
   useEffect(() => {
     const unsub = onAuthStateChanged(auth, async (u) => {
       setUser(u);
-      if (u) {
-        const roleSnap = await getDoc(doc(db, "users", u.uid));
-        const role = roleSnap.data()?.role || "";
-        if (role === "admin") {
-          router.push("/admin");
-        } else if (role === "chat admin") {
-          router.push("/chat");
-        } else {
-          router.push("/general");
-        }
+      if (!u) {
+        setLoading(false);
+        return;
+      }
+      const roleSnap = await getDoc(doc(db, "users", u.uid));
+      const role = roleSnap.data()?.role || "";
+      if (role === "admin") {
+        router.replace("/admin");
+      } else if (role === "chat admin") {
+        router.replace("/chat");
+      } else {
+        router.replace("/general");
       }
     });
     return () => unsub();
@@ -40,7 +43,7 @@ export default function Home() {
   }
 
 
-  if (!user) {
+  if (!user && !loading) {
     return (
       <main className="page-container">
         <form onSubmit={login} className="auth-form">
@@ -63,7 +66,7 @@ export default function Home() {
 
   return (
     <main className="page-container">
-      <p>Redirecting...</p>
+      <p>Loading...</p>
     </main>
   );
 }
