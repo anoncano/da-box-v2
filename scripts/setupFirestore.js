@@ -47,8 +47,13 @@ async function ensureAdminUser() {
 }
 
 async function main() {
+  if (!process.env.GOOGLE_APPLICATION_CREDENTIALS) {
+    console.error('GOOGLE_APPLICATION_CREDENTIALS is not set');
+    process.exit(1);
+  }
   await ensureGlobalSettings();
   await ensureAdminUser();
+  console.log('Firestore setup complete');
 }
 
 main().catch(err => {
