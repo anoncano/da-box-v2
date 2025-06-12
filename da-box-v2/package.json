@@ -7,13 +7,15 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "init-firestore": "node ../scripts/initFirestore.js"
+    "init-firestore": "node ../scripts/initFirestore.js",
+    "setup-firestore": "node ../scripts/setupFirestore.js"
   },
   "dependencies": {
     "firebase": "^11.9.0",
     "next": "15.3.3",
     "react": "^19.0.0",
-    "react-dom": "^19.0.0"
+    "react-dom": "^19.0.0",
+    "firebase-admin": "^12.7.0"
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4",

@@ -53,11 +53,26 @@ Global configuration like `relayHoldTime` and `inactivityTimeout` is saved in `g
 
 ### Initializing Firestore
 
-If your Firestore database is empty, you can create the default `globalSettings` document by running:
+If your Firestore database is empty, you can create the default data by running one of the provided scripts. Both scripts require Firebase service account credentials. Set the path to your JSON key using the `GOOGLE_APPLICATION_CREDENTIALS` environment variable. Before running a script make sure dependencies are installed with `npm ci` so that the `firebase-admin` package is available.
+
+To only create `globalSettings/settings` with default configuration run:
 
 ```bash
 export GOOGLE_APPLICATION_CREDENTIALS=path/to/serviceAccountKey.json
-node ../scripts/initFirestore.js
+npm run init-firestore
 ```
 
-This script uses the Firebase Admin SDK to create `globalSettings/settings` with sensible defaults. It only runs once and will not overwrite an existing document.
+This script creates `globalSettings/settings` with sensible defaults. It only runs once and will not overwrite an existing document.
+
+You can also seed an initial admin user and the same settings in one go:
+
+```bash
+export GOOGLE_APPLICATION_CREDENTIALS=path/to/serviceAccountKey.json
+export INIT_ADMIN_EMAIL=admin@example.com
+export INIT_ADMIN_PASSWORD=supersecret
+npm run setup-firestore
+```
+
+`setup-firestore` will create the admin authentication account and a matching document in `users/<uid>` with the role set to `admin` if they don't already exist. The global settings document is created as well if missing.
+
+Once finished you can verify the data in the Firebase console. Look for a `globalSettings` collection containing a `settings` document and a document in `users` for the admin account if you provided credentials.
