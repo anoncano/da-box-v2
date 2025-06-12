@@ -7,7 +7,8 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "init-firestore": "node ../scripts/initFirestore.js"
+    "init-firestore": "node ../scripts/initFirestore.js",
+    "setup-firestore": "node ../scripts/setupFirestore.js"
   },
   "dependencies": {
     "firebase": "^11.9.0",
